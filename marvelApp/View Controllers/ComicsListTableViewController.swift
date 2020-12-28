@@ -9,7 +9,7 @@ import UIKit
 
 class ComicsListTableViewController: UITableViewController {
 
-    var searchData: SearchCatalogDataEntry!
+//    var searchData: SearchCatalogDataEntry!
     
     override func viewDidLoad() {
         super.viewDidLoad()

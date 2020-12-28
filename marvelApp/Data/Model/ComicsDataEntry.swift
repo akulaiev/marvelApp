@@ -8,10 +8,15 @@
 import Foundation
 
 // MARK: - Result
-struct ComicsDataEntry: Codable {
+class ComicsDataEntry: Codable {
     let title: String
     let prices: [Price]
-    let thumbnail: ImageURL
+    let imageURLComponents: ImageURL
+    
+    enum CodingKeys: String, CodingKey {
+        case title, prices
+        case imageURLComponents = "thumbnail"
+    }
 }
 
 // MARK: Price

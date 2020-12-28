@@ -74,17 +74,7 @@ extension Request: Requestable {
     }
 }
 
-enum APIErrors: Error {
-    case jsonParseError(Error)
-    case imageDownloadError(String)
-    case networkRequestError(String)
-}
-
-protocol NetworkManager {
-    func performRequest<Response : Decodable>(request: Request, completion: @escaping (Result<Response, Error>) -> Void)
-}
-
-class DefaultNetworkManager: NetworkManager {
+class NetworkManager {
     
     let requestLimit: Int
     var requestOffset = 0
@@ -108,29 +98,29 @@ class DefaultNetworkManager: NetworkManager {
         }
     }
     
-    //MARK: - Network Manager Delegate
+    //MARK: - Perform request
     func performRequest<Response>(request: Request, completion: @escaping (Result<Response, Error>) -> Void) where Response : Decodable {
-        guard let builtRequest = build(request: request) else {
-            completion(.failure(APIErrors.imageDownloadError("Incorrect image url provided")))
-            return
-        }
-        AF.request(builtRequest).response { (response) in
+            guard let builtRequest = build(request: request) else {
+                completion(.failure(NSError.init(domain: "Incorrect image url provided", code: 1, userInfo: nil)))
+                return
+            }
+            AF.request(builtRequest).response { (response) in
             DispatchQueue.main.async {
                 guard let data = response.data else {
-                    completion(.failure(response.error ?? APIErrors.networkRequestError(response.debugDescription)))
+                    completion(.failure(response.error!))
                     return
                 }
                 switch request {
-                case .downloadImage:
-                    completion(.success(data as! Response))
-                default:
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    do {
-                        let decodedData = try decoder.decode(Response.self, from: data)
-                        completion(.success(decodedData))
-                    } catch {
-                        completion(.failure(APIErrors.jsonParseError(error)))
+                    case .downloadImage:
+                        completion(.success(data as! Response))
+                    default:
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        do {
+                            let decodedData = try decoder.decode(Response.self, from: data)
+                            completion(.success(decodedData))
+                        } catch {
+                        completion(.failure(response.error ?? NSError.init(domain: "Could not parse network data", code: 2, userInfo: nil)))
                     }
                 }
             }

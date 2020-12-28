@@ -1,18 +1,16 @@
 //
-//  SearchCatalogDataEntry.swift
+//  CharactersDataEntry.swift
 //  marvelApp
 //
-//  Created by Anna Kulaieva on 23.12.2020.
+//  Created by Anna Kulaieva on 28.12.2020.
 //
 
 import Foundation
 import UIKit
 
-//MARK:- Data entry for character/author
-class SearchCatalogDataEntry: Codable {
+class CharactersDataEntry: Codable {
 
-    let name: String?
-    let fullName: String?
+    let name: String
     let id: Int
     let imageURLComponents: ImageURL
     var image = UIImage(named: "imagePlaceholder")
@@ -23,7 +21,7 @@ class SearchCatalogDataEntry: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case name, fullName, id
+        case name, id
         case imageURLComponents = "thumbnail"
     }
 }

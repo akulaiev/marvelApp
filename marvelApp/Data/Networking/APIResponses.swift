@@ -7,15 +7,26 @@
 
 import Foundation
 
-// MARK: Catalog/Author DataClass
-struct SearchCatalogDataClass: Codable {
-    let offset, limit, total, count: Int
-    let results: [SearchCatalogDataEntry]
+//MARK:- Character list response struct
+struct CharacterResponse: Codable {
+    let data: CharacterData
 }
 
-//MARK:- Character or creator list response struct
-struct DataResponse: Codable {
-    let data: SearchCatalogDataClass
+// MARK: Character DataClass
+struct CharacterData: Codable {
+    let offset, limit, total, count: Int
+    let results: [CharactersDataEntry]
+}
+
+//MARK:- Creator list response struct
+struct AuthorResponse: Codable {
+    let data: AuthorData
+}
+
+// MARK: Author DataClass
+struct AuthorData: Codable {
+    let offset, limit, total, count: Int
+    let results: [AuthorsDataEntry]
 }
 
 // MARK: - ComicsResponse

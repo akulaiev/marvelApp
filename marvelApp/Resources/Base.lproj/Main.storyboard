@@ -193,6 +193,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="RKZ-Xw-2PQ" id="Cvf-yg-yvc"/>
                                     <outlet property="delegate" destination="RKZ-Xw-2PQ" id="tfM-sJ-s3N"/>
+                                    <outlet property="prefetchDataSource" destination="RKZ-Xw-2PQ" id="Fgo-l2-HXc"/>
                                 </connections>
                             </tableView>
                         </subviews>
