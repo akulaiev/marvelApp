@@ -42,6 +42,7 @@ struct AuthData {
 enum Request {
     case searchCharacters(String)
     case searchAuthors(String)
+    case showComics(catalog: String, id: String)
     case downloadImage(String)
 }
 
@@ -57,6 +58,8 @@ extension Request: Requestable {
             return ["nameStartsWith" : item]
         case let .searchAuthors(item):
             return ["lastNameStartsWith" : item]
+        case .showComics:
+            return [:]
         case .downloadImage:
             return [:]
         }
@@ -68,6 +71,8 @@ extension Request: Requestable {
             return "/creators"
         case .searchCharacters:
             return "/characters"
+        case let .showComics(catalog: catalog, id: id):
+            return "/\(catalog)/\(id)/comics"
         case .downloadImage:
             return ""
         }

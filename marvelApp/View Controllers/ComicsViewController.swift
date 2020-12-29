@@ -1,30 +1,37 @@
 //
-//  CharactersTableViewController.swift
+//  ComicsViewController.swift
 //  marvelApp
 //
-//  Created by Anna Kulaieva on 23.12.2020.
+//  Created by Anna Kulaieva on 29.12.2020.
 //
 
 import UIKit
 
-class CharactersViewController: BaseViewController, BaseViewControllerDelegate {
-
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+//Extension for current VC, that doesn't need search bar
+extension BaseViewControllerDelegate {
+    var searchBar: UISearchBar! { get { return nil } set {} }
+    var searchQuery: String {get { return "" } set {} }
     
-    var dataModel: CharacterViewModel!
-    var cellIdentifier = "searchCharacters"
-    var searchQuery = ""
+}
+
+class ComicsViewController: BaseViewController, BaseViewControllerDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var dataModel: ComicsViewModel!
+    var cellIdentifier = "comicsCell"
+    var catalog = ""
+    var id = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataModel = CharacterViewModel(delegate: self)
-        searchBar.delegate = self
+        dataModel = ComicsViewModel(delegate: self)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.prefetchDataSource = self
         super.delegateClassDataModel = dataModel
         super.delegate = self
+        dataModel.fetchComicsData(from: catalog, for: id)
     }
     
     // MARK: - Table view data source
@@ -34,18 +41,12 @@ class CharactersViewController: BaseViewController, BaseViewControllerDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        super.pickedCatalog = "characters"
-        super.idForPickedEntry = "\(dataModel.characters[indexPath.row].id)"
-        performSegue(withIdentifier: "toComics", sender: self)
-    }
-    
     func configure(cell: UITableViewCell, with indexPath: IndexPath) {
         dataModel.configureCell(cell)
         if !isLoadingCell(for: indexPath) {
-            let dataEntry = dataModel.characters[indexPath.row]
-            cell.textLabel?.text = dataEntry.name
+            let dataEntry = dataModel.comics[indexPath.row]
+            cell.textLabel?.text = dataEntry.title
+            cell.detailTextLabel?.text = String(dataEntry.prices[0].price)
             cell.imageView?.image = dataEntry.image
             if dataEntry.placeholderImage {
                 dataModel.downloadImage(for: dataEntry.imageURL, for: cell, at: indexPath)
@@ -55,28 +56,22 @@ class CharactersViewController: BaseViewController, BaseViewControllerDelegate {
     }
     
     override func clear(tableView: UITableView) {
-        dataModel.characters.removeAll()
+        dataModel.comics.removeAll()
         super.clear(tableView: tableView)
     }
     
     //MARK: - Data Manager Delegate
     override func saveLoadedImage(at inadexPath: IndexPath, image: UIImage) {
-        if inadexPath.row < dataModel.characters.count {
-            dataModel.characters[inadexPath.row].image = image
+        if inadexPath.row < dataModel.comics.count {
+            dataModel.comics[inadexPath.row].image = image
         }
-    }
-    
-    //MARK: - SearchBar Delegate
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        clear(tableView: tableView)
-        searchQuery = searchBar.text ?? ""
-        dataModel.fetchCharacterData(for: searchQuery)
     }
     
     //MARK: - UITableViewDataSourcePrefetching Delegate
     override func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
-            dataModel.fetchCharacterData(for: searchQuery)
+            dataModel.fetchComicsData(from: catalog, for: id)
         }
     }
 }
+

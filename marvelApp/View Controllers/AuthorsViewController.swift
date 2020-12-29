@@ -34,6 +34,13 @@ class AuthorsViewController: BaseViewController, BaseViewControllerDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        super.pickedCatalog = "creators"
+        super.idForPickedEntry = "\(dataModel.authors[indexPath.row].id)"
+        performSegue(withIdentifier: "toComics", sender: self)
+    }
+    
     func configure(cell: UITableViewCell, with indexPath: IndexPath) {
         dataModel.configureCell(cell)
         if !isLoadingCell(for: indexPath) {

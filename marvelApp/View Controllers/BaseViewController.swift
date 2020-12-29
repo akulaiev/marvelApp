@@ -17,6 +17,8 @@ protocol BaseViewControllerDelegate: class {
 class BaseViewController: UIViewController, UITableViewDelegate {
     var delegateClassDataModel: DataManager!
     weak var delegate: BaseViewControllerDelegate!
+    var pickedCatalog = ""
+    var idForPickedEntry = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,14 @@ class BaseViewController: UIViewController, UITableViewDelegate {
         dataModel.totalCount = 0
         dataModel.dataCount = 0
         dataModel.resetPaginationParams()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toComics" {
+            let comicsVC = segue.destination as! ComicsViewController
+            comicsVC.catalog = pickedCatalog
+            comicsVC.id = idForPickedEntry
+        }
     }
     
     func saveLoadedImage(at inadexPath: IndexPath, image: UIImage) {}
@@ -45,7 +55,7 @@ extension BaseViewController: UITableViewDataSource {
         delegateClassDataModel.configureCell(cell)
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
