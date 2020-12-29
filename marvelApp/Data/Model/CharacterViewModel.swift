@@ -8,45 +8,29 @@
 import Foundation
 import UIKit
 
-class Character {
-    var result = [CharactersDataEntry]()
-    var paginationData = PaginationData()
-    
-    init(from characterData: CharacterData) {
-  
-        self.result = characterData.results
-        paginationData.update(offset: characterData.offset, limit: characterData.limit, total: characterData.total, count: characterData.count)
-    }
-    
-    func update(characterData: CharacterData) {
-        if !self.result.isEmpty {
-            self.result.append(contentsOf: characterData.results)
-        }
-        else {
-            self.result = characterData.results
-        }
-        paginationData.update(offset: characterData.offset, limit: characterData.limit, total: characterData.total, count: characterData.count)
-    }
-}
-
 class CharacterViewModel: DataManager {
-    var characters: Character!
+    var characters = [CharactersDataEntry]()
     
     func fetchCharacterData(for query: String) {
-        super.networkManager.performRequest(request: Request.searchCharacters(query)) { (result: Result<CharacterResponse, Error>) in
+        guard !isFetchInProgress else { return }
+        isFetchInProgress = true
+        super.networkManager.performRequest(request: Request.searchCharacters(query)) { [self] (result: Result<CharacterResponse, Error>) in
+            self.isFetchInProgress = false
             switch result {
             case let .failure(error):
-                self.delegate?.onFetchFailed(with: error.localizedDescription)
+                delegate?.onFetchFailed(with: error.localizedDescription)
             case let .success(response):
-                print(self.characters?.paginationData.offset ?? "no offset for you")
-                guard let characters = self.characters else {
-                    self.characters = Character(from: response.data)
-                    self.delegate?.onFetchCompleted(with: .none)
-                    return
+                totalCount = totalCount == 0 ? response.data.total : totalCount
+                networkManager.requestOffset += response.data.count
+                dataCount += response.data.count
+                characters.append(contentsOf: response.data.results)
+                if networkManager.requestOffset > response.data.limit {
+                    let indexPathsToReload = calculateIndexPathsToReload(from: response.data.results.count, allDataCount: characters.count)
+                    self.delegate?.onFetchCompleted(with: indexPathsToReload)
                 }
-                characters.update(characterData: response.data)
-                let indexPathsToReload = super.calculateIndexPathsToReload(from: response.data.results, allData: characters.result)
-                self.delegate?.onFetchCompleted(with: indexPathsToReload)
+                else {
+                    self.delegate?.onFetchCompleted(with: .none)
+                }
             }
         }
     }

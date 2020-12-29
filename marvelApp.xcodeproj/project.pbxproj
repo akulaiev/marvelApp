@@ -26,6 +26,7 @@
 		2D90B39D25999163005D7525 /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B39C25999163005D7525 /* CharacterViewModel.swift */; };
 		2D90B3A0259991C5005D7525 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B39F259991C5005D7525 /* DataManager.swift */; };
 		2D90B3A32599B15C005D7525 /* AuthorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B3A22599B15C005D7525 /* AuthorsViewModel.swift */; };
+		2D90B3D8259B67B4005D7525 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B3D7259B67B4005D7525 /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		2D90B39C25999163005D7525 /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		2D90B39F259991C5005D7525 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		2D90B3A22599B15C005D7525 /* AuthorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorsViewModel.swift; sourceTree = "<group>"; };
+		2D90B3D7259B67B4005D7525 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6E947E6D3B192335F49391B6 /* libPods-marvelApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-marvelApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -104,6 +106,7 @@
 				2D90B2E02593A8C0005D7525 /* CharactersViewController.swift */,
 				2D90B2E32593A8D6005D7525 /* AuthorsViewController.swift */,
 				2D90B339259792C5005D7525 /* ComicsListTableViewController.swift */,
+				2D90B3D7259B67B4005D7525 /* BaseViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				2D90B33A259792C5005D7525 /* ComicsListTableViewController.swift in Sources */,
 				2D90B3A0259991C5005D7525 /* DataManager.swift in Sources */,
 				2D90B2F52593AECD005D7525 /* APIResponses.swift in Sources */,
+				2D90B3D8259B67B4005D7525 /* BaseViewController.swift in Sources */,
 				2D90B2FB2594FDB9005D7525 /* NetworkManager.swift in Sources */,
 				2D90B3A32599B15C005D7525 /* AuthorsViewModel.swift in Sources */,
 				2D90B34B25980F91005D7525 /* ComicsDataEntry.swift in Sources */,
