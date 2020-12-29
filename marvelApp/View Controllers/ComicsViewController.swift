@@ -55,7 +55,7 @@ class ComicsViewController: BaseViewController, BaseViewControllerDelegate {
         if !isLoadingCell(for: indexPath) {
             let dataEntry = dataModel.comics[indexPath.row]
             cell.textLabel?.text = dataEntry.title
-            cell.detailTextLabel?.text = String(dataEntry.prices[0].price)
+            cell.detailTextLabel?.text = String(dataEntry.prices[0].price) + "$"
             cell.imageView?.image = dataEntry.image
             if dataEntry.placeholderImage {
                 dataModel.downloadImage(for: dataEntry.imageURL, for: cell, at: indexPath)
