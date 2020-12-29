@@ -19,11 +19,19 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="5yd-Em-CNZ">
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading... Marvel assignment by Hanna Kulaieva" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6S-Dt-1gY">
+                                <rect key="frame" x="48" y="474" width="318.5" height="45.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" red="0.90028750899999999" green="0.1120635644" blue="0.13682883979999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="highlightedColor" red="0.90028750899999999" green="0.1120635644" blue="0.13682883979999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="5yd-Em-CNZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="8cc-ZD-DXy"/>
+                            <constraint firstItem="g6S-Dt-1gY" firstAttribute="top" secondItem="5yd-Em-CNZ" secondAttribute="bottom" constant="7.5" id="D52-7O-tma"/>
+                            <constraint firstItem="g6S-Dt-1gY" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="WlG-t3-1tC"/>
                             <constraint firstItem="5yd-Em-CNZ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="rnO-m3-LFu"/>
                         </constraints>
                     </view>

@@ -41,6 +41,15 @@ class ComicsViewController: BaseViewController, BaseViewControllerDelegate {
         return cell
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "openImage" {
+            let imageVC = segue.destination as! FullImageViewController
+            if let cell = sender as? UITableViewCell {
+                imageVC.imageToShow = cell.imageView?.image
+            }
+        }
+    }
+    
     func configure(cell: UITableViewCell, with indexPath: IndexPath) {
         dataModel.configureCell(cell)
         if !isLoadingCell(for: indexPath) {
@@ -74,4 +83,3 @@ class ComicsViewController: BaseViewController, BaseViewControllerDelegate {
         }
     }
 }
-

@@ -146,6 +146,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="FUG-gZ-vwg" kind="presentation" identifier="openImage" id="TXL-Su-Usm"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -172,6 +175,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VNa-QN-fv8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="511.59420289855075" y="184.82142857142856"/>
+        </scene>
+        <!--Full Image View Controller-->
+        <scene sceneID="wwR-h6-Ljb">
+            <objects>
+                <viewController id="FUG-gZ-vwg" customClass="FullImageViewController" customModule="marvelApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TQz-PD-Eam">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cf7-lT-hVL">
+                                <rect key="frame" x="0.0" y="44" width="414" height="764"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6v-V4-uPq">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="lEc-bm-Y7h"/>
+                                    <barButtonItem image="xmark.octagon.fill" catalog="system" id="4r0-FF-Q2R">
+                                        <connections>
+                                            <action selector="closeButtonPressed:" destination="FUG-gZ-vwg" id="X56-hE-oFt"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="fDD-bJ-tGF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cf7-lT-hVL" firstAttribute="top" secondItem="H6v-V4-uPq" secondAttribute="bottom" id="8cl-rK-dci"/>
+                            <constraint firstItem="fDD-bJ-tGF" firstAttribute="bottom" secondItem="cf7-lT-hVL" secondAttribute="bottom" id="DwY-1t-6nF"/>
+                            <constraint firstItem="fDD-bJ-tGF" firstAttribute="trailing" secondItem="cf7-lT-hVL" secondAttribute="trailing" id="OXC-Xe-YDA"/>
+                            <constraint firstItem="H6v-V4-uPq" firstAttribute="trailing" secondItem="fDD-bJ-tGF" secondAttribute="trailing" id="Swn-JH-NEk"/>
+                            <constraint firstItem="cf7-lT-hVL" firstAttribute="top" secondItem="H6v-V4-uPq" secondAttribute="bottom" id="U1j-Du-p2c"/>
+                            <constraint firstItem="cf7-lT-hVL" firstAttribute="leading" secondItem="fDD-bJ-tGF" secondAttribute="leading" id="U4K-kS-Zbu"/>
+                            <constraint firstItem="H6v-V4-uPq" firstAttribute="leading" secondItem="fDD-bJ-tGF" secondAttribute="leading" id="UEL-p5-tMh"/>
+                            <constraint firstItem="H6v-V4-uPq" firstAttribute="top" secondItem="fDD-bJ-tGF" secondAttribute="top" id="bwD-1c-aaG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="cf7-lT-hVL" id="GQy-gJ-KT2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jjF-7L-GIF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218.840579710145" y="184.82142857142856"/>
         </scene>
         <!--Characters-->
         <scene sceneID="gdH-9R-35N">
@@ -245,6 +292,7 @@
     <resources>
         <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="star.circle" catalog="system" width="128" height="121"/>
+        <image name="xmark.octagon.fill" catalog="system" width="128" height="112"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
