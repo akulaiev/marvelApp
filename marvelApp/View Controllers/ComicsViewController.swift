@@ -7,38 +7,22 @@
 
 import UIKit
 
-//Extension for current VC, that doesn't need search bar
-extension BaseViewControllerDelegate {
-    var searchBar: UISearchBar! { get { return nil } set {} }
-    var searchQuery: String {get { return "" } set {} }
-    
-}
-
-class ComicsViewController: BaseViewController, BaseViewControllerDelegate {
+class ComicsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
     var dataModel: ComicsViewModel!
-    var cellIdentifier = "comicsCell"
     var catalog = ""
     var id = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dataModel = ComicsViewModel(delegate: self)
-        tableView.delegate = self
-        tableView.dataSource = self
+        dataModel.cellIdentifier = "comicsCell"
+        tableView.delegate = dataModel
+        tableView.dataSource = dataModel
         tableView.prefetchDataSource = self
-        super.delegateClassDataModel = dataModel
-        super.delegate = self
         dataModel.fetchComicsData(from: catalog, for: id)
-    }
-    
-    // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        configure(cell: cell, with: indexPath)
-        return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -50,9 +34,21 @@ class ComicsViewController: BaseViewController, BaseViewControllerDelegate {
         }
     }
     
-    func configure(cell: UITableViewCell, with indexPath: IndexPath) {
-        dataModel.configureCell(cell)
-        if !isLoadingCell(for: indexPath) {
+    func clear(tableView: UITableView) {
+        dataModel.comics.removeAll()
+        dataModel.clear(tableView: tableView)
+    }
+}
+
+//MARK: - Data Manager Delegate
+extension ComicsViewController: DataManagerDelegate {
+    func selectedRow(in tableView: UITableView, at indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    func configure(cell: UITableViewCell, with indexPath: IndexPath) -> UITableViewCell {
+        if dataModel.isLoadingCell(for: indexPath) == false {
             let dataEntry = dataModel.comics[indexPath.row]
             cell.textLabel?.text = dataEntry.title
             cell.detailTextLabel?.text = String(dataEntry.prices[0].price) + "$"
@@ -62,23 +58,33 @@ class ComicsViewController: BaseViewController, BaseViewControllerDelegate {
                 dataEntry.placeholderImage = false
             }
         }
+        return cell
     }
     
-    override func clear(tableView: UITableView) {
-        dataModel.comics.removeAll()
-        super.clear(tableView: tableView)
-    }
-    
-    //MARK: - Data Manager Delegate
-    override func saveLoadedImage(at inadexPath: IndexPath, image: UIImage) {
+    func saveLoadedImage(at inadexPath: IndexPath, image: UIImage) {
         if inadexPath.row < dataModel.comics.count {
             dataModel.comics[inadexPath.row].image = image
         }
     }
-    
-    //MARK: - UITableViewDataSourcePrefetching Delegate
-    override func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: isLoadingCell) {
+
+    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
+        guard let newIndexPathsToReload = newIndexPathsToReload else {
+            tableView.reloadData()
+            return
+        }
+        let indexPathsToReload = dataModel.visibleIndexPathsToReload(indexPaths: newIndexPathsToReload, tableView: tableView)
+        tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+    }
+
+    func onFetchFailed(with reason: String) {
+        HelperMethods.showFailureAlert(title: "Warning", message: reason, controller: self)
+    }
+}
+
+//MARK: - UITableViewDataSourcePrefetching Delegate
+extension ComicsViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: dataModel.isLoadingCell) {
             dataModel.fetchComicsData(from: catalog, for: id)
         }
     }

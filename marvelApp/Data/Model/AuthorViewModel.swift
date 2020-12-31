@@ -11,26 +11,14 @@ import UIKit
 class AuthorViewModel: DataManager {
     var authors = [AuthorsDataEntry]()
     
-    func fetchAuthorData(for query: String) {
-        guard !isFetchInProgress else { return }
-        isFetchInProgress = true
-        super.networkManager.performRequest(request: Request.searchAuthors(query)) { [self] (result: Result<AuthorResponse, Error>) in
-            self.isFetchInProgress = false
+    func fetchAuthorData(for query: String/*, completion: @escaping (Result<(APIResponse<AuthorsDataEntry>, [IndexPath]?), Error>) -> Void*/) {
+        fetchData(for: Request.searchAuthors(query), type: AuthorsDataEntry.self) { [self] result in
             switch result {
+            case let .success((fetchedData, indexPaths)):
+                authors.append(contentsOf: fetchedData)
+                delegate?.onFetchCompleted(with: indexPaths)
             case let .failure(error):
                 delegate?.onFetchFailed(with: error.localizedDescription)
-            case let .success(response):
-                totalCount = totalCount == 0 ? response.data.total : totalCount
-                networkManager.requestOffset += response.data.count
-                dataCount += response.data.count
-                authors.append(contentsOf: response.data.results)
-                if networkManager.requestOffset > response.data.limit {
-                    let indexPathsToReload = calculateIndexPathsToReload(from: response.data.results.count, allDataCount: authors.count)
-                    self.delegate?.onFetchCompleted(with: indexPathsToReload)
-                }
-                else {
-                    self.delegate?.onFetchCompleted(with: .none)
-                }
             }
         }
     }

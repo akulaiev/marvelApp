@@ -12,25 +12,13 @@ class ComicsViewModel: DataManager {
     var comics = [ComicsDataEntry]()
     
     func fetchComicsData(from catalog: String, for id: String) {
-        guard !isFetchInProgress else { return }
-        isFetchInProgress = true
-        super.networkManager.performRequest(request: Request.showComics(catalog: catalog, id: id)) { [self] (result: Result<ComicsResponse, Error>) in
-            self.isFetchInProgress = false
+        fetchData(for: Request.showComics(catalog: catalog, id: id), type: ComicsDataEntry.self) { [self] result in
             switch result {
+            case let .success((fetchedData, indexPaths)):
+                comics.append(contentsOf: fetchedData)
+                delegate?.onFetchCompleted(with: indexPaths)
             case let .failure(error):
                 delegate?.onFetchFailed(with: error.localizedDescription)
-            case let .success(response):
-                totalCount = totalCount == 0 ? response.data.total : totalCount
-                networkManager.requestOffset += response.data.count
-                dataCount += response.data.count
-                comics.append(contentsOf: response.data.results)
-                if networkManager.requestOffset > response.data.limit {
-                    let indexPathsToReload = calculateIndexPathsToReload(from: response.data.results.count, allDataCount: comics.count)
-                    self.delegate?.onFetchCompleted(with: indexPathsToReload)
-                }
-                else {
-                    self.delegate?.onFetchCompleted(with: .none)
-                }
             }
         }
     }

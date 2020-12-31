@@ -81,11 +81,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="o8D-gA-68x" id="S1E-29-L8g"/>
-                                    <outlet property="delegate" destination="o8D-gA-68x" id="ICS-kZ-A9S"/>
-                                    <outlet property="prefetchDataSource" destination="o8D-gA-68x" id="DiI-la-9q8"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="geS-sG-KaR"/>
@@ -151,11 +146,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="p9i-5x-577" id="Ki0-n9-xK0"/>
-                                    <outlet property="delegate" destination="p9i-5x-577" id="ZV1-Us-sVY"/>
-                                    <outlet property="prefetchDataSource" destination="p9i-5x-577" id="7Kf-nn-rM4"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cla-r0-ltJ"/>
@@ -254,11 +244,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="RKZ-Xw-2PQ" id="Cvf-yg-yvc"/>
-                                    <outlet property="delegate" destination="RKZ-Xw-2PQ" id="tfM-sJ-s3N"/>
-                                    <outlet property="prefetchDataSource" destination="RKZ-Xw-2PQ" id="Fgo-l2-HXc"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kw4-Ws-mqY"/>

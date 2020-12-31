@@ -25,7 +25,6 @@
 		2D90B39D25999163005D7525 /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B39C25999163005D7525 /* CharacterViewModel.swift */; };
 		2D90B3A0259991C5005D7525 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B39F259991C5005D7525 /* DataManager.swift */; };
 		2D90B3A32599B15C005D7525 /* AuthorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B3A22599B15C005D7525 /* AuthorViewModel.swift */; };
-		2D90B3D8259B67B4005D7525 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B3D7259B67B4005D7525 /* BaseViewController.swift */; };
 		2D90B3E0259B803B005D7525 /* ComicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B3DF259B803B005D7525 /* ComicsViewModel.swift */; };
 		2D90B3E4259B89B1005D7525 /* ComicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B3E3259B89B1005D7525 /* ComicsViewController.swift */; };
 		2D90B3E7259B975A005D7525 /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D90B3E6259B975A005D7525 /* FullImageViewController.swift */; };
@@ -53,7 +52,6 @@
 		2D90B39C25999163005D7525 /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		2D90B39F259991C5005D7525 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		2D90B3A22599B15C005D7525 /* AuthorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewModel.swift; sourceTree = "<group>"; };
-		2D90B3D7259B67B4005D7525 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		2D90B3DF259B803B005D7525 /* ComicsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewModel.swift; sourceTree = "<group>"; };
 		2D90B3E3259B89B1005D7525 /* ComicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewController.swift; sourceTree = "<group>"; };
 		2D90B3E6259B975A005D7525 /* FullImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullImageViewController.swift; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 			children = (
 				2D90B2E02593A8C0005D7525 /* CharactersViewController.swift */,
 				2D90B2E32593A8D6005D7525 /* AuthorsViewController.swift */,
-				2D90B3D7259B67B4005D7525 /* BaseViewController.swift */,
 				2D90B3E3259B89B1005D7525 /* ComicsViewController.swift */,
 				2D90B3E6259B975A005D7525 /* FullImageViewController.swift */,
 			);
@@ -279,7 +276,6 @@
 				2D90B3E4259B89B1005D7525 /* ComicsViewController.swift in Sources */,
 				2D90B3A0259991C5005D7525 /* DataManager.swift in Sources */,
 				2D90B2F52593AECD005D7525 /* APIResponses.swift in Sources */,
-				2D90B3D8259B67B4005D7525 /* BaseViewController.swift in Sources */,
 				2D90B2FB2594FDB9005D7525 /* NetworkManager.swift in Sources */,
 				2D90B3A32599B15C005D7525 /* AuthorViewModel.swift in Sources */,
 				2D90B34B25980F91005D7525 /* ComicsDataEntry.swift in Sources */,

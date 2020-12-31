@@ -51,6 +51,15 @@ protocol Requestable {
     var queryItems: [String : String] {get}
 }
 
+enum NetworkManagerError: Error {
+    case credentialsError
+    case fileReadingError(Error)
+    case imageUrlError
+    case urlError
+    case networkRequestFailure(Error)
+    case decoderError(Error)
+}
+
 extension Request: Requestable {
     var queryItems: [String : String] {
         switch self {
@@ -90,7 +99,7 @@ class NetworkManager {
     init(requestLimit: Int) {
         self.requestLimit = requestLimit
         guard let credsUrl = Bundle.main.url(forResource: "Credentials", withExtension: "json") else {
-            fatalError("Could not find credentials file")
+            fatalError(NetworkManagerError.credentialsError.localizedDescription)
         }
         do {
             let credentialsData = try Data(contentsOf: credsUrl)
@@ -99,20 +108,20 @@ class NetworkManager {
             authData = AuthData(credentials: credentials)
         }
         catch {
-            fatalError("File reading error: \(error)")
+            fatalError(NetworkManagerError.fileReadingError(error).localizedDescription)
         }
     }
     
     //MARK: - Perform request
     func performRequest<Response>(request: Request, completion: @escaping (Result<Response, Error>) -> Void) where Response : Decodable {
             guard let builtRequest = build(request: request) else {
-                completion(.failure(NSError.init(domain: "Incorrect image url provided", code: 1, userInfo: nil)))
+                completion(.failure(NetworkManagerError.imageUrlError))
                 return
             }
             AF.request(builtRequest).response { (response) in
             DispatchQueue.main.async {
                 guard let data = response.data else {
-                    completion(.failure(response.error!))
+                    completion(.failure(NetworkManagerError.networkRequestFailure(response.error!)))
                     return
                 }
                 switch request {
@@ -125,7 +134,7 @@ class NetworkManager {
                             let decodedData = try decoder.decode(Response.self, from: data)
                             completion(.success(decodedData))
                         } catch {
-                        completion(.failure(response.error ?? NSError.init(domain: "Could not parse network data", code: 2, userInfo: nil)))
+                            completion(.failure(NetworkManagerError.decoderError(response.error!)))
                     }
                 }
             }
@@ -142,7 +151,7 @@ class NetworkManager {
             return URLRequest(url: url)
         default:
             guard var components = URLComponents(url: URL(string: baseString)!, resolvingAgainstBaseURL: true) else {
-                fatalError("Incorrect url provided")
+                fatalError(NetworkManagerError.urlError.localizedDescription)
                 
             }
             components.path = "/v1/public" + request.pathComponent
