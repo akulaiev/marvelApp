@@ -58,6 +58,7 @@ enum NetworkManagerError: Error {
     case urlError
     case networkRequestFailure(Error)
     case decoderError(Error)
+    case networkError
 }
 
 extension Request: Requestable {
@@ -134,7 +135,7 @@ class NetworkManager {
                             let decodedData = try decoder.decode(Response.self, from: data)
                             completion(.success(decodedData))
                         } catch {
-                            completion(.failure(NetworkManagerError.decoderError(response.error!)))
+                            completion(.failure(NetworkManagerError.decoderError(response.error ?? NetworkManagerError.networkError)))
                     }
                 }
             }
